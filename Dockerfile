@@ -2,7 +2,7 @@
 FROM openjdk:8-jre-alpine
 LABEL maintainer="Martin DSouza <martin@talkapex.com>"
 
-ENV TZ="GMT" \
+ENV TZ="${TZ}" \
   APEX_CONFIG_DIR="/opt" \
   TOMCAT_HOME="/usr/local/tomcat" \
   APEX_PUBLIC_USER_NAME="APEX_PUBLIC_USER" \
@@ -11,8 +11,8 @@ ENV TZ="GMT" \
   REST_SERVICES_ORDS="true" \
   MIGRATE_APEX_REST="true" \
   # SQL Developer Web and REST enabled SQL
-  FEATURE_SDW="true" \ 
-  REST_SQL="true" \
+  FEATURE_SDW="${FEATURE_SDW}" \ 
+  REST_SQL="${REST_SQL}" \
   ORDS_DIR="/ords"
 
 WORKDIR ${ORDS_DIR}
@@ -29,8 +29,8 @@ ENTRYPOINT ["/ords/config-run-ords.sh"]
 
 VOLUME ["/ords/apex-images", "/opt/ords"]
 
-EXPOSE 8080
+EXPOSE $ORDS_HTTP_PORT
 
-HEALTHCHECK --start-period=10s --interval=5s --retries=5 CMD curl --fail http://localhost:8080/ords || exit 1
+HEALTHCHECK --start-period=10s --interval=5s --retries=5 CMD curl --fail http://localhost:${ORDS_HTTP_PORT}/ords || exit 1
 
 CMD ["run"]

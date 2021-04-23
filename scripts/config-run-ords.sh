@@ -45,7 +45,7 @@ else
 	echo "schema.tablespace.temp=TEMP" >> $PARAM_FILE
 
 	# standalone
-	echo "standalone.http.port=8080" >> $PARAM_FILE
+	echo "standalone.http.port=$ORDS_HTTP_PORT" >> $PARAM_FILE
 	echo "standalone.mode=true" >> $PARAM_FILE
 	echo "standalone.static.images=/ords/apex-images" >> $PARAM_FILE
 	# TODO change make this optional and apply cert options
