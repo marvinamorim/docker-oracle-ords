@@ -2,7 +2,7 @@
 files/*.zip
 
 ### Configuration file
-.env
+.env*
 
 ### VSCode
 .vscode/
@@ -11,3 +11,6 @@ files/*.zip
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+
+#ords volume
+ords
