@@ -27,7 +27,6 @@ else
 	# SID doesnt work so use SERVICENAME instead
 	# echo "db.sid=$DB_SID" >> $PARAM_FILE
 	echo "db.username=$APEX_PUBLIC_USER_NAME" >> $PARAM_FILE
-
 	# other
 	echo "plsql.gateway.add=true" >> $PARAM_FILE
 
@@ -36,9 +35,10 @@ else
 	echo "rest.services.ords.add=$REST_SERVICES_ORDS" >> $PARAM_FILE
 	# echo "migrate.apex.rest=$MIGRATE_APEX_REST" >> $PARAM_FILE
 
-	# SQL Dev Web and REST SQL
+	# SQL Dev Web, REST SQL and Database Actions
 	echo "restEnabledSql.active=$REST_SQL" >> $PARAM_FILE
 	echo "feature.sdw=$FEATURE_SDW" >> $PARAM_FILE
+	echo "database.api.enabled=$DATABASE_ACTIONS" >> $PARAM_FILE
 
 	# schema
 	echo "schema.tablespace.default=SYSAUX" >> $PARAM_FILE
@@ -60,9 +60,10 @@ else
 
 	# sys
 	echo "sys.user=SYS" >> $PARAM_FILE
-	echo "sys.password=$SYS_PASS" >> $PARAM_FILE
+	echo "sys.password=$SYS_PASS" >> $PARAM_FILE 
 
 	echo "*** PARAMFILE: $PARAM_FILE"
+
 	# echo "*** PARAMFILE START ***"
 	# cat $PARAM_FILE
 	# echo "*** PARAMFILE END ***"
