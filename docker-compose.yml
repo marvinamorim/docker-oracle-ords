@@ -1,23 +1,28 @@
-version: '3.3'
+version: '3.9'
+
 services:
-    oracle-ords:
+    oracle-ords: 
         image: ords
         container_name: ords
-        environment:
-            - TZ=${TZ}
-            - DB_HOSTNAME=${DB_HOSTNAME}
-            - DB_PORT=${DB_PORT}
-            - DB_SERVICENAME=${DB_SERVICENAME}
-            - APEX_PUBLIC_USER_PASS=${APEX_PUBLIC_USER_PASS}
-            - APEX_LISTENER_PASS=${APEX_LISTENER_PASS}
-            - APEX_REST_PASS=${APEX_REST_PASS}
-            - ORDS_PASS=${ORDS_PASS}
-            - SYS_PASS=${SYS_PASS}
+        env_file:
+            - .env
         build:
             context: .
             dockerfile: Dockerfile
         volumes:
-            - '${ORDS_BASE_DIR}/ords/${ORDS_VERSION}/config:/opt/ords'
-            - '${ORDS_BASE_DIR}/files/apex/${APEX_VERSION}/images:/ords/apex-images'
+            - './${ORDS_BASE_DIR}/ords/${ORDS_VERSION}/config:/opt/ords'
+            - './${ORDS_BASE_DIR}/files/apex/${APEX_VERSION}/images:/ords/apex-images'
         ports:
             - '${ORDS_HTTP_PORT}:${ORDS_HTTP_PORT}'
+        command: sh -c "/ords/config-run-ords.sh"
+        healthcheck:
+            test: curl --fail http://localhost:${ORDS_HTTP_PORT}/ords || exit 1
+            interval: 5s
+            retries: 5
+            start_period: 10s
+        networks:
+            - oracle_network
+
+networks:
+    oracle_network:
+        name: oracle_network
